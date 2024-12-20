@@ -2,6 +2,8 @@
 # $< = first dependency
 # $^ = all dependencies
 
+ARCH=x86_64
+
 # detect all .o files based on their .c source
 C_SOURCES = $(wildcard src/*.c)
 C_HEADERS = $(wildcard include/*.h)
@@ -17,7 +19,7 @@ all: run
 # Notice how dependencies are built as needed
 $(BIN_FILES)/kernel.bin: ${OBJ_FILES}
 	$(LD) -nostdlib -m elf_i386 -o $@.elf -Ttext=0xf100 $^ 
-	objcopy --only-section=.text -O binary $@.elf $@
+	objcopy -j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela -j .reloc  --target=efi-app-$(ARCH) -O binary $@.elf $@
 
 $(BIN_FILES)/os-image.bin: $(BIN_FILES)/main.bin $(BIN_FILES)/kernel.bin
 	cat $^ > $@
@@ -50,4 +52,4 @@ $(BIN_FILES)/%.bin: src/%.asm
 
 clean:
 	$(RM) *.o *.dis *.elf
-	$(RM) src/*.o $(BIN_FILES)/*.bin
+	$(RM) src/*.o $(BIN_FILES)/*.bin $(BIN_FILES)/*.elf
