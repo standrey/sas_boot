@@ -1,4 +1,6 @@
-disk_load:
+[bits 16]
+; load 'dh' sectors from drive 'dl' into es:bx
+load_exe_from_disk:
     pusha
     push dx
 
@@ -18,13 +20,14 @@ disk_load:
     ret
 
 disk_error:
+    mov bx, MSG_DISK_ERROR
     jmp disk_loop
 
 sector_count_error:
+    mov bx, MSG_SECTOR_ERROR
     jmp disk_loop
 
 disk_loop:
-    mov bx, MSG_ERROR
     call print16
     call print16_nl
     jmp $
