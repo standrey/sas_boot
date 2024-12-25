@@ -30,4 +30,4 @@ sector_count_error:
 disk_loop:
     call print16
     call print16_nl
-    jmp $
+    hlt

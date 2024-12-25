@@ -2,7 +2,7 @@
 # $< = first dependency
 # $^ = all dependencies
 
-ARCH=x86_64
+ARCH=i386
 
 # detect all .o files based on their .c source
 C_SOURCES = $(wildcard src/*.c)

@@ -11,6 +11,8 @@ mov [BOOT_DRIVE], dl ; Remember that the BIOS sets us the boot drive in 'dl' on 
 mov bp, 0x9000
 mov sp, bp
 
+call fancy_video_mode
+
 mov bx, MSG_16BIT_MODE
 call print16
 call print16_nl
@@ -24,6 +26,7 @@ jmp $ ; Never executed
 %include "src/diskload.asm"
 %include "src/gdtsegment.asm"
 %include "src/to32bit.asm"
+%include "src/fancyvideomode.asm"
 
 [bits 16]
 load_kernel:
