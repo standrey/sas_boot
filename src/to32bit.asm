@@ -1,5 +1,9 @@
 [bits 16]
 switch_to_32bit:
+    mov bx, SWITCHING_TO_32
+    call print16
+    call print16_nl
+   
     cli
     lgdt [gdt_descriptor]
     mov eax, cr0
@@ -16,7 +20,7 @@ init_32bit:
     mov fs, ax
     mov gs, ax
 
-    mov ebp, 0xf0000
+    mov ebp, 0x90000
     mov esp, ebp
 
     call BEGIN_32BIT

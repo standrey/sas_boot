@@ -35,7 +35,7 @@ load_kernel:
     call print16_nl
 
     mov bx, IMAGE_DESTINATION_OFFSET
-    mov dh, 20 ; Number of sectors N to read from the disk - N*512 bytes
+    mov dh, 0x02 ; Number of sectors N to read from the disk - N*512 bytes
     mov dl, [BOOT_DRIVE]
     call load_exe_from_disk
     
@@ -57,11 +57,12 @@ BEGIN_32BIT:
 BOOT_DRIVE db 0 ; It is a good idea to store it in memory because 'dl' may get overwritten
 MSG_16BIT_MODE db "Started in 16-bit Real Mode", 0
 MSG_32BIT_MODE db "Landed in 32-bit Protected Mode", 0
-MSG_LOAD_KERNEL db "Loading kernel into memory...", 0
+MSG_LOAD_KERNEL db "Loading kernel into memory", 0
 MSG_LOAD_KERNEL_DONE db "Loading kernel into memory is done", 0
-MSG_DISK_ERROR db "Disk error!", 0
-MSG_SECTOR_ERROR db "Sector error!", 0
+MSG_DISK_ERROR db "Disk error", 0
+MSG_SECTOR_ERROR db "Sector error", 0
+SWITCHING_TO_32 db "To 32 mode", 0
 
-    ; padding
+; padding
 times 510 - ($-$$) db 0
 dw 0xaa55
