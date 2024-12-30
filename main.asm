@@ -21,18 +21,18 @@ call load_kernel ; read the kernel from disk
 call switch_to_32bit ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_PM'
 jmp $ ; Never executed
 
-%include "src/print16bit.asm"
-%include "src/print32bit.asm"
-%include "src/diskload.asm"
-%include "src/gdtsegment.asm"
-%include "src/to32bit.asm"
-%include "src/fancyvideomode.asm"
+%include "print16bit.asm"
+%include "print32bit.asm"
+%include "diskload.asm"
+%include "gdtsegment.asm"
+%include "to32bit.asm"
+%include "fancyvideomode.asm"
 
 [bits 16]
 load_kernel:
-    mov bx, MSG_LOAD_KERNEL
-    call print16
-    call print16_nl
+;    mov bx, MSG_LOAD_KERNEL
+;    call print16
+;    call print16_nl
 
     mov bx, IMAGE_DESTINATION_OFFSET
     mov dh, 0x02 ; Number of sectors N to read from the disk - N*512 bytes
