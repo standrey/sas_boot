@@ -18,6 +18,10 @@ call print16
 call print16_nl
 
 call load_kernel ; read the kernel from disk
+
+xor ax, ax 
+mov ds ,ax 
+
 call switch_to_32bit ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_PM'
 jmp $ ; Never executed
 
@@ -49,6 +53,7 @@ load_kernel:
 BEGIN_32BIT:
     mov ebx, MSG_32BIT_MODE
     call print32
+
     call IMAGE_DESTINATION_OFFSET ; Give control to the kernel
     jmp $ ; Stay here when the kernel returns control to us (if ever)
 
