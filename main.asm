@@ -22,13 +22,12 @@ call load_kernel ; read the kernel from disk
 xor ax, ax 
 mov ds ,ax 
 
-call switch_to_32bit ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_PM'
-jmp $ ; Never executed
+call switch_to_32bit ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_32BIT'
+jmp $
 
 %include "print16bit.asm"
 %include "print32bit.asm"
 %include "diskload.asm"
-%include "gdtsegment.asm"
 %include "to32bit.asm"
 %include "fancyvideomode.asm"
 
@@ -50,9 +49,9 @@ load_kernel:
     ret
 
 [bits 32]
-BEGIN_32BIT:
-    mov ebx, MSG_32BIT_MODE
-    call print32
+execute_kernel:
+;    mov ebx, MSG_32BIT_MODE
+;    call print32
 
     call IMAGE_DESTINATION_OFFSET ; Give control to the kernel
     jmp $ ; Stay here when the kernel returns control to us (if ever)
