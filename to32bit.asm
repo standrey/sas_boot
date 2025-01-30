@@ -11,11 +11,27 @@ switch_to_32bit:
 
 [bits 32]
 protected_mode:
+
     mov al, 'A'
     mov ah, 0x0f
     mov [0xb8000], ax
-    hlt
-    ;call execute_kernel ; call a wel-known label with useful code
+   
+    mov ax, DATA_SEG
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    mov ebp, 0x90000
+    mov esp, ebp
+
+    mov al, 'B'
+    mov ah, 0x0f
+    mov [0xb8000], ax
+
+    call bootloader_continue; call a wel-known label with useful code
+    
 
 start_segment:
     dd 0x0
